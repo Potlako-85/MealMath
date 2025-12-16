@@ -1,23 +1,30 @@
-function scaleIngredient(amount, baseServings, targetServings)
-{
-    return (amount / baseServings) * targetServings;
+const recipe = {
+  name: "Pancakes",
+  servings: 6,
+  ingredients: [
+    { name: "Flour", quantity: 2, unit: "cups" },
+    { name: "Milk", quantity: 1.5, unit: "cups" },
+    { name: "Eggs", quantity: 2, unit: "pcs" }
+  ]
+};
 
-}
+function scaleRecipe(recipe,  targetServings){
+    const factor = targetServings / recipe.servings;
 
-const ingredients = [{name: "flour", amount: 200, unit: "g"},
-    {name: "sugar", amount: 100, unit: "g"},
-    {name: "butter", amount: 50, unit: "g"}
-];
+    return recipe.ingredients.map(item => {
+        const scaledQuantity = item.quantity * factor;
 
-const baseServings = 4;
-const targetServings = Number(process.argv[2]);
+        return{
+            name : item.name,
+            quantity: Number(scaledQuantity.toFixed(2)),
+            unit: item.unit
+        };
+    });
+} 
 
-if (!targetServings || targetServings <= 0)
-{
-   console.log("Please enter a avlid number of servings.");
-   Processing.exit(1);
-}
-ingredients.forEach(item => {
-    const scaled = scaleIngredient(item.amount, baseServings, targetServings);
-    console.log(`${item.name}: ${scaled}${item.unit}`);
+const targetServings = 10;
+const scaledIngredients = scaleRecipe(recipe, targetServings);
+
+scaledIngredients.forEach(item => {
+    console.log(`${item.name}: ${item.quantity} ${item.unit}`);
 })
