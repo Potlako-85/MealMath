@@ -1,14 +1,13 @@
-const recipe = {
-  name: "Pancakes",
-  servings: 6,
-  ingredients: [
-    { name: "Flour", quantity: 2, unit: "cups" },
-    { name: "Milk", quantity: 1.5, unit: "cups" },
-    { name: "Eggs", quantity: 2, unit: "pcs" }
-  ]
-};
-
 function scaleRecipe(recipe,  targetServings){
+
+  if (typeof targetServings !== "number" || isNaN(targetServings)){
+    throw new Error ("Target servings must be a number.");
+  }
+
+  if (targetServings <= 0) {
+    throw new Error ("Target servings must be greater than 0.");
+  }
+
     const factor = targetServings / recipe.servings;
 
     return recipe.ingredients.map(item => {
@@ -22,9 +21,13 @@ function scaleRecipe(recipe,  targetServings){
     });
 } 
 
-const targetServings = 10;
+try {
+const targetServings = "abs";
 const scaledIngredients = scaleRecipe(recipe, targetServings);
 
 scaledIngredients.forEach(item => {
     console.log(`${item.name}: ${item.quantity} ${item.unit}`);
-})
+});
+} catch (error) {
+   console.error("Error:", error.message);
+}
