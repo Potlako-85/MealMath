@@ -67,9 +67,20 @@ function scaleRecipe(recipe,  targetServings, targetUnit = null){
     });
 } 
 
-try {
-const targetServings = 10;
-const scaledIngredients = scaleRecipe(recipe, 10, "tbsp");
+const targetServingsInput = process.argv[2];
+const targetUnit = process.argv[3] || null;
+
+const targetServings = Number (targetServingsInput);
+
+if (!targetServingsInput){
+  console.error("Usage: node index.js <servings> [unit]");
+  process.exit(1);
+}
+
+try{
+const scaledIngredients = scaleRecipe(recipe, targetServings, targetUnit);
+ 
+console.log(`\nScaled recipe for ${targetServings} servings:\n`);
 
 scaledIngredients.forEach(item => {
     console.log(`${item.name}: ${item.quantity} ${item.unit}`);
