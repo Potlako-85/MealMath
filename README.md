@@ -1,81 +1,87 @@
-MealMath (MVP)
+# 🍽️ MealMath (MVP)
 
-MealMath is a recipe-scaling calculator designed to help users accurately adjust ingredient quantities based on the number of servings they want to cook for. The project started as a command-line MVP focused on 
+MealMath is a recipe-scaling calculator that helps users accurately adjust ingredient quantities based on the number of servings they want to cook for.
 
-core calculation logic and unit conversions, and is being actively evolved into a full web application.
+The project began as a **command-line MVP**, focusing on core calculation logic, unit conversions, and input validation. It is actively being developed into a full web application.
 
-This repository currently contains the initial MVP, which prioritizes correctness, validation, and extensibility.
+---
 
-Features:
+## ✨ Features
 
--Scale recipes up or down based on target servings
+- Scale recipes up or down based on target servings
+- Automatic ingredient quantity recalculation
+- Basic unit conversion support (`cups`, `tbsp`, `tsp`)
+- Input validation with clear error messages
+- Command-line interface (CLI) usage
+- Designed with future UI and database integration in mind
 
--Automatic ingredient quantity recalculation
+---
 
--Basic unit conversion support (cups, tbsp, tsp)
+## 🧠 How It Works
 
--Input validation with clear error messages
+The program performs the following steps:
 
--Command-line interface (CLI) usage
+1. Calculates a scaling factor using  
+   `targetServings / originalServings`
+2. Applies the factor to each ingredient
+3. Optionally converts units if a compatible target unit is provided
+4. Rounds quantities to two decimal places for readability
 
--Designed with future UI and database integration in mind
+All logic is isolated into pure functions to allow easy reuse in future versions (web UI, API, database).
 
-The core logic:
+---
 
-1.Calculates a scaling factor using
-targetServings / originalServings
+## ▶️ Usage
 
-2.Applies the factor to each ingredient
+### Run the program:
 
-3.Optionally converts units if a compatible target unit is provided
-
-4.Rounds quantities to two decimal places for readability
-
-All logic is isolated into pure functions to make future reuse (web UI, API, database) straightforward.
-
-To run the program:
+```bash
 node index.js <servings> [unit]
 
-Example: 
-Input
+---
+
+##Example:
 node index.js 10 tbsp
-Output
+
+Output:
 Scaled recipe for 10 servings:
 
 Flour: 53.33 tbsp
 Milk: 40 tbsp
 Eggs: 3.33 pcs
 
-Tech Stack:
--JavaScript (Node.js)
--No external libraries (logic-first MVP)
+##🛠️ Tech Stack
 
-Roadmap:
-This MVP is the foundation for future versions, including:
+JavaScript (Node.js)
 
--Web-based UI (React)
+No external libraries (logic-first MVP)
 
--Recipe selection and categorization
+##🛣️ Roadmap
 
--User-added recipes
+Web-based UI (React)
 
--Database-backed persistence
+Recipe selection and categorization
 
--Search and filtering
+User-added recipes
 
--Nutritional information
+Database-backed persistence
 
--Image-based recipe input (OCR exploration)
+Search and filtering
 
-The current implementation was intentionally kept simple to ensure correctness before adding complexity.
+Nutritional information
 
-Author:
+Image-based recipe input (OCR exploration)
+
+##👤 Author
+
 Potlako Makofane
-
-3rd year Computer Science Student
+3rd Year Computer Science Student
 
 This project is part of a personal portfolio focused on building real, scalable software systems.
 
-Notes
+##📝 Notes
 
-This repository represents an early-stage MVP. The project is under active development and will evolve significantly as features are added and the architecture grows.
+This repository represents an early-stage MVP.
+The project is under active development and will continue to evolve as new features and architectural improvements are added.
+
+
