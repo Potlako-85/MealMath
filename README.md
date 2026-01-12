@@ -35,42 +35,45 @@ All logic is isolated into pure functions to allow easy reuse in future versions
 
 ### Run the program:
 
-```bash
-node index.js <servings> [unit]
+```node index.js <servings> [unit]```
 
----
-
-##Example:
+##Example
 node index.js 10 tbsp
 
-Output:
+Output
 Scaled recipe for 10 servings:
 
 Flour: 53.33 tbsp
 Milk: 40 tbsp
 Eggs: 3.33 pcs
 
+---
+
 ##🛠️ Tech Stack
 
-JavaScript (Node.js)
+-JavaScript (Node.js)
 
-No external libraries (logic-first MVP)
+-No external libraries (logic-first MVP)
+
+---
 
 ##🛣️ Roadmap
 
-Web-based UI (React)
+-Web-based UI (React)
 
-Recipe selection and categorization
+-Recipe selection and categorization
 
-User-added recipes
+-User-added recipes
 
-Database-backed persistence
+-Database-backed persistence
 
-Search and filtering
+-Search and filtering
 
-Nutritional information
+-Nutritional information
 
-Image-based recipe input (OCR exploration)
+-Image-based recipe input (OCR exploration)
+
+---
 
 ##👤 Author
 
@@ -79,9 +82,11 @@ Potlako Makofane
 
 This project is part of a personal portfolio focused on building real, scalable software systems.
 
+---
+
 ##📝 Notes
 
 This repository represents an early-stage MVP.
 The project is under active development and will continue to evolve as new features and architectural improvements are added.
 
-
+---
