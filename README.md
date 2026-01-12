@@ -52,4 +52,7 @@ Author:
 Potlako Makofane
 3rd year Computer Science Student
 This project is part of a personal portfolio focused on building real, scalable software systems.
-  
+
+Notes
+
+This repository represents an early-stage MVP. The project is under active development and will evolve significantly as features are added and the architecture grows.
