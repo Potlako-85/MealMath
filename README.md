@@ -37,10 +37,10 @@ All logic is isolated into pure functions to allow easy reuse in future versions
 
 ```node index.js <servings> [unit]```
 
-##Example
+### Example
 node index.js 10 tbsp
 
-Output
+### Output
 Scaled recipe for 10 servings:
 
 Flour: 53.33 tbsp
@@ -49,7 +49,7 @@ Eggs: 3.33 pcs
 
 ---
 
-##🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 -JavaScript (Node.js)
 
@@ -57,7 +57,7 @@ Eggs: 3.33 pcs
 
 ---
 
-##🛣️ Roadmap
+## 🛣️ Roadmap
 
 -Web-based UI (React)
 
@@ -75,7 +75,7 @@ Eggs: 3.33 pcs
 
 ---
 
-##👤 Author
+## 👤 Author
 
 Potlako Makofane
 3rd Year Computer Science Student
@@ -84,7 +84,7 @@ This project is part of a personal portfolio focused on building real, scalable 
 
 ---
 
-##📝 Notes
+## 📝 Notes
 
 This repository represents an early-stage MVP.
 The project is under active development and will continue to evolve as new features and architectural improvements are added.
