@@ -1,0 +1,236 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+ scrollbar-gutter: stable;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("85756145-kitchen-table-with-spices-and-dry-herbs-on-wooden-kitchen-background-top-view-mock-up.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(51, 48, 48, 0.55);
+  backdrop-filter:  blur(5px);
+  z-index: -1;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.layout {
+  width: 100%;
+  max-width: 1400px;
+  background: #e2e2e2;
+  border-radius: 36px;
+  padding: 3.5rem 4rem;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.25);
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+.logo {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  color: #111827;
+  font-size: 72px;
+}
+.m1{
+  color: rgb(183, 159, 114);
+}
+
+.m2{
+  color: rgb(183, 159, 114);
+}
+
+.content {
+  display: flex;
+  gap: 3rem;
+}
+
+.sidebar {
+  width: 260px;
+}
+
+.recipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.recipe-btn {
+  padding: 0.9rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #111827;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.recipe-btn:hover {
+  background: #e5e7eb;
+}
+
+.recipe-btn.active {
+  background: #111827;
+  color: white;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.main h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+.meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 1.2rem;
+}
+
+.description {
+  font-size: 1rem;
+  color: #374151;
+  margin-bottom: 2rem;
+}
+
+.recipes {
+  font-size: 28px;
+  color: #111827;
+}
+
+.ingredients-card {
+  background: #f9fafb;
+  border-radius: 20px;
+  padding: 1.75rem;
+}
+
+.ingredients-card h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #111827;
+}
+
+.ingredients {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color:#111827;
+}
+
+.ingredients li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+}
+
+.ingredients li:last-child {
+  border-bottom: none;
+}
+
+.calculator-card {
+  display: flex;
+  justify-content: center;
+}
+
+.calculator {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: #e2e2e2;
+  padding: 1.2rem 1.6rem;
+  border-radius: 24px;
+  color: #111827;
+}
+
+.calc-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  border: none;
+  background: rgb(43, 42, 42);
+  color: #c5c5c5;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.calc-btn:hover {
+  background: #e5e7eb;
+}
+
+.display {
+  color: #111827;
+  font-size: 1.5rem;
+  min-width: 40px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .layout {
+    padding: 2.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .logo {
+    font-size: 2.2rem;
+  }
+
+  .layout {
+    padding: 2rem 1.5rem;
+  }
+}

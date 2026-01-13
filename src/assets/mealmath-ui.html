@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:5173/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="./mealmath-ui_files/client"></script>
+
+    
+    <link rel="icon" type="image/svg+xml" href="http://localhost:5173/vite.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mealmath-ui</title>
+  <style type="text/css" data-vite-dev-id="C:/Users/pmako/OneDrive/Documents/mealmath-ui/src/index.css">:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/pmako/OneDrive/Documents/mealmath-ui/src/App.css">
+/* src/App.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff; /* bright base */
+}
+
+/* Background picture behind the container */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("85756145-kitchen-table-with-spices-and-dry-herbs-on-wooden-kitchen-background-top-view-mock-up.jpg"); 
+  background-size: cover;
+  background-position: center;
+  opacity: 0.20;
+  
+  z-index: 0;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #7f8c8d; /* grey label text */
+}
+
+input[type="number"] {
+  margin-left: 0.5rem;
+  width: 70px;
+  padding: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Error message */
+.error {
+  color: #e74c3c;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Recipe title */
+h2 {
+  color: #34495e;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.3rem;
+}
+
+/* Ingredients list */
+.ingredients-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.ingredients-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 1rem;
+  color: #2c3e50; /* dark text for readability */
+}
+
+.ingredient-name {
+  font-weight: bold;
+}
+
+.ingredient-quantity {
+  color: #2c3e50;
+}
+
+.ingredient-unit {
+  color: #34495e; /* darker grey so units are visible */
+}
+
+.calc-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #e5e5e5;
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calc-btn:focus {
+  outline: none;
+}
+
+.calc-btn:active {
+  transform: scale(0.95);
+}
+
+.error {
+  margin-top: 0.5rem;
+  color: #dc2626;
+  font-size: 0.85rem;
+}
+
+.calculator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.layout {
+  min-height: 100vh;
+  display: flex;
+  background: #f7f7f7;
+}
+
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  padding: 2rem 1.5rem;
+  background: #ffffff;
+  border-right: 1px solid #e5e5e5;
+}
+
+
+.logo {
+  margin-bottom: var(--space-md);
+}
+
+.sidebar h3 {
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.recipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.recipe-list button {
+  padding: 0.6rem 1rem;
+  border: none;
+  background: #f3f3f3;
+  color: #333;
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.recipe-list button:hover {
+  background: #e6e6e6;
+}
+
+.recipe-list button.active {
+  background: #222;
+  color: #fff;
+}
+
+.recipe-meta {
+  display: flex;
+  gap: 1rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.badge {
+  background: #f0f0f0;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+}
+
+.description {
+  margin-top: 0.5rem;
+  color: #444;
+}
+
+.main {
+  flex: 1;                    /* takes remaining space */
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;        /* centers content horizontally */
+}
+
+.main > * {
+  width: 100%;
+  max-width: 900px;           /* prevents over-stretching */
+}
+
+.main h2 {
+  margin: 0;
+} 
+
+.meta {
+  display: flex;
+  gap: var(--space-sm);
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.calculator-card {
+  position: sticky;
+  top: 2rem;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.calculator {
+  background: #f5f5f5;
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  color: rgb(75, 75, 75);
+}
+
+.calc-btn{
+  color: rgb(75, 75, 75);
+}
+
+.ingredients-card {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
+  padding: 1.5rem 1.75rem;
+  margin-top: 1.5rem;
+  margin-top: var(--space-lg);
+}
+
+.ingredients-card h3 {
+  margin: 0 0 1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.ingredients {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredients li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  color: grey;
+}
+
+.ingredients li:last-child {
+  border-bottom: none;
+}
+
+.ingredient-name {
+  color: #555;
+}
+
+.ingredient-amount {
+  font-weight: 600;
+  color: #222;
+}
+
+.recipe-btn {
+  background: transparent;
+  border: none;
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #444;
+  transition: background 0.2s ease;
+}
+
+.recipe-btn:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.recipe-btn.active {
+  background: rgba(0,0,0,0.1);
+  font-weight: 600;
+}
+
+:root {
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+}
+
+.calc-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Skeleton base */
+.skeleton *,
+.skeleton-logo,
+.skeleton-button,
+.skeleton-title,
+.skeleton-meta,
+.skeleton-line {
+  background: linear-gradient(
+    90deg,
+    #e6e6e6 25%,
+    #f2f2f2 37%,
+    #e6e6e6 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 8px;
+}
+
+/* Sizes */
+.skeleton-logo {
+  height: 32px;
+  width: 70%;
+  margin-bottom: 2rem;
+}
+
+.skeleton-button {
+  height: 40px;
+  margin-bottom: 1rem;
+}
+
+.skeleton-title {
+  height: 28px;
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+.skeleton-meta {
+  height: 16px;
+  width: 40%;
+  margin-bottom: 2rem;
+}
+
+.skeleton-line {
+  height: 18px;
+  margin-bottom: 0.75rem;
+}
+
+/* Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+/*for mobile phones*/
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.sidebar,
+.main,
+.calculator-card {
+  width: 100%;
+}
+
+/*For tablet +*/
+@media (min-width: 768px) {
+  .layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .sidebar {
+    width: 220px;
+    flex-shrink: 0;
+  }
+
+  .main {
+    flex: 1;
+  }
+
+  .calculator-card {
+    width: 180px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .layout {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+button {
+  min-height: 44px;
+}
+
+.calc-btn {
+  font-size: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    justify-content: center;
+  }
+
+  .main {
+    align-items: center;
+  }
+}
+
+
+
+
+
+</style></head>
+  <body>
+    <div id="root"><div class="layout"><aside class="sidebar"><h1 class="logo">MealMath</h1><div class="recipe-list"><button class="recipe-btn active">Pancakes</button><button class="recipe-btn ">Spaghetti Bolognese</button><button class="recipe-btn ">Chicken Stir Fry</button><button class="recipe-btn ">Banana Smoothie</button><button class="recipe-btn ">Garlic Bread</button><button class="recipe-btn ">Omelette</button></div></aside><main class="main"><h2>Pancakes</h2><div class="meta"><span>Breakfast</span><span>Original servings: 2</span></div><p class="description">Fluffy breakfast pancakes, perfect with syrup or fruit.</p><div class="ingredients-card"><h3>Ingredients</h3><ul class="ingredients"><li><span class="ingredient-name">Flour</span><span class="ingredient-amount">100 g</span></li><li><span class="ingredient-name">Milk</span><span class="ingredient-amount">150 ml</span></li><li><span class="ingredient-name">Eggs</span><span class="ingredient-amount">1 pcs</span></li></ul></div></main><div class="calculator-card"><div class="calculator"><button class="calc-btn">−</button><span class="display">1</span><button class="calc-btn">+</button></div></div></div></div>
+    <script type="module" src="./mealmath-ui_files/main.jsx"></script>
+  
+
+</body></html>
