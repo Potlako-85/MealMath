@@ -3,14 +3,19 @@ Purpose
 The MealMath database is designed to support:
 
 -Recipe storage and retrieval
+
 -Ingredient scaling logic (already implemented in code)
+
 -Future user-generated recipes
+
 -Searching, filtering, and categorization
+
 -Extensibility for nutrition data and images
 
 This schema is technology-agnostic (can work with SQL or NoSQL).
 
 Core Entities
+
 1️⃣ Recipe
 
 Represents a single recipe.
@@ -49,27 +54,43 @@ Links recipes to ingredients with quantities.
 Relationships
 
 -Recipe 1 → many RecipeIngredients
+
 -Ingredient 1 → many RecipeIngredients
+
 -Recipe → Category (many-to-one)
 
 Future Extensions
+
 Nutrition (v2)
+
 -calories
+
 -protein
+
 -carbs
+
 -fats
 
 User Recipes (v2)
+
 -userId
+
 -ownership
+
 -permissions
 
 Media (v3)
+
 -recipe images
+
 -OCR input support
 
 Design Decisions
+
 -Quantities stored at base servings
+
 -Scaling handled at runtime (already implemented)
+
 -Ingredients normalized to avoid duplication
+
 -Schema supports both SQL and NoSQL backends
