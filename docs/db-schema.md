@@ -1,22 +1,20 @@
-Purpose
+## Purpose
 
-The MealMath database is designed to support:
+### The MealMath database is designed to support:
 
--Recipe storage and retrieval
-
--Ingredient scaling logic (already implemented in code)
-
--Future user-generated recipes
-
--Searching, filtering, and categorization
-
--Extensibility for nutrition data and images
+- Recipe storage and retrieval
+- Ingredient scaling logic (already implemented in code)
+- Future user-generated recipes
+- Searching, filtering, and categorization
+- Extensibility for nutrition data and images
 
 This schema is technology-agnostic (can work with SQL or NoSQL).
 
-Core Entities
+---
 
-1️⃣ Recipe
+## Core Entities
+
+### 1️⃣ Recipe
 
 Represents a single recipe.
 
@@ -30,7 +28,9 @@ Represents a single recipe.
 | `createdAt`   | Timestamp | Creation date            |
 | `updatedAt`   | Timestamp | Last update              |
 
-2️⃣ Ingredient
+---
+
+### 2️⃣ Ingredient
 
 Represents an ingredient definition (reusable across recipes).
 
@@ -40,7 +40,9 @@ Represents an ingredient definition (reusable across recipes).
 | `name`     | String | Ingredient name       |
 | `unitType` | Enum   | mass / volume / count |
 
-3️⃣ RecipeIngredient (Join Table)
+---
+
+### 3️⃣ RecipeIngredient (Join Table)
 
 Links recipes to ingredients with quantities.
 | Field          | Type   | Description             |
@@ -51,46 +53,48 @@ Links recipes to ingredients with quantities.
 | `quantity`     | Float  | Base quantity           |
 | `unit`         | String | g, ml, pcs, etc         |
 
-Relationships
+---
 
--Recipe 1 → many RecipeIngredients
+### Relationships
 
--Ingredient 1 → many RecipeIngredients
+- Recipe 1 → many RecipeIngredients
+- Ingredient 1 → many RecipeIngredients
+- Recipe → Category (many-to-one)
 
--Recipe → Category (many-to-one)
+---
 
-Future Extensions
+## Future Extensions
 
-Nutrition (v2)
+### Nutrition (v2)
 
--calories
+- calories
+- protein
+- carbs
+- fats
 
--protein
+### User Recipes (v2)
 
--carbs
+- userId
+- ownership
+- permissions
 
--fats
+### Media (v3)
 
-User Recipes (v2)
+- recipe images
+- OCR input support
 
--userId
+---
 
--ownership
+### Design Decisions
 
--permissions
+- Quantities stored at base servings
+- Scaling handled at runtime (already implemented)
+- Ingredients normalized to avoid duplication
+- Schema supports both SQL and NoSQL backends
 
-Media (v3)
+---
 
--recipe images
-
--OCR input support
-
-Design Decisions
-
--Quantities stored at base servings
-
--Scaling handled at runtime (already implemented)
-
--Ingredients normalized to avoid duplication
-
--Schema supports both SQL and NoSQL backends
+The database schema is optimized for read-heavy workloads.
+Indexes are applied to primary keys and foreign keys to ensure efficient joins and lookups.
+Additional indexes are planned for frequently filtered columns such as recipe name and category.
+Write performance is preserved by avoiding unnecessary indexing of calculated or rarely queried fields.
