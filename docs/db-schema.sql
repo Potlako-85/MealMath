@@ -46,3 +46,24 @@ FOREIGN KEY (user_id)
 REFERENCES AppUser(id)
 ON DELETE SET NULL;
 
+SELECT id, name, category FROM recipes;
+
+SELECT * FROM recipes WHERE id = ?;
+
+SELECT ingredients_name, quantity, unit 
+FROM ingredients_name
+WHERE recipes_id = ?;
+
+CREATE INDEX idx_ingredients_recipe_id
+ON ingredients(recipe_id);
+
+recipes.name
+SELECT * FROM recipes
+WHERE name ILIKE '%pancake%'
+
+recipes.category
+SELECT FROM recipes WHERE category = 'Breakfast';
+ CREATE INDEX idx_recipes_category
+ ON recipes(category);
+
+ 

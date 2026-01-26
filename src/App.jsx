@@ -1,43 +1,43 @@
 import { useEffect, useState } from "react";
 import { scaleRecipe } from "./calculator";
-import { fetchRecipes } from "./recipes";
+import { fetchRecipes, fetchRecipesByID } from "./api/fetchRecipes";
 import "./App.css";
 
 export default function App() {
-  /* -------------------- DATA STATE -------------------- */
+
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
-  /* -------------------- UI / LOGIC STATE -------------------- */
   const [servings, setServings] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  /* -------------------- LOAD RECIPES -------------------- */
-  useEffect(() => {
-    fetchRecipes()
-      .then((data) => {
-        setRecipes(data);
+ useEffect(() => {
+  async function loadInitialRecipe() {
+    try {
+      const list = await fetchRecipes();
+      setRecipes(list);
 
-        const savedId = localStorage.getItem("selectedRecipeId");
-        const savedServings = localStorage.getItem("servings");
-
-        const initialRecipe =
-          data.find((r) => r.id === Number(savedId)) || data[0];
-
-        setSelectedRecipe(initialRecipe);
-        setServings(
-          savedServings ? Number(savedServings) : initialRecipe.servings
-        );
+      if (list.length === 0) {
+        setError("No recipes found");
         setLoading(false);
-      })
-      .catch(() => {
-        setError("Failed to load recipes.");
-        setLoading(false);
-      });
-  }, []);
+        return;
+      }
 
-  /* -------------------- PERSIST STATE -------------------- */
+      const fullRecipe = await fetchRecipesByID(list[0].id);
+      setSelectedRecipe(fullRecipe);
+      setServings(fullRecipe.servings);
+    } catch (err) {
+      setError("Failed to load recipes", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  loadInitialRecipe();
+}, []);
+
+
   useEffect(() => {
     if (selectedRecipe) {
       localStorage.setItem("selectedRecipeId", selectedRecipe.id);
@@ -48,7 +48,20 @@ export default function App() {
     localStorage.setItem("servings", servings);
   }, [servings]);
 
-  /* -------------------- LOADING / ERROR -------------------- */
+  const handleSelectRecipe = async (recipe) => {
+    try{
+      const fullRecipe = await fetchRecipesByID(recipe.id);
+
+      setSelectedRecipe(fullRecipe);
+      setServings(fullRecipe.servings);
+
+      localStorage.setItem("selectedRecipeID", recipe.id);
+      localStorage.setItem("servings", fullRecipe.servings);
+    } catch{
+      setError("Failed to load recipe details");
+    }
+  }
+
   if (loading) {
       return (
     <div className="layout">
@@ -73,7 +86,6 @@ export default function App() {
     </div>
   );
 }
-
 
   if (error) {
     return <div className="error">{error}</div>;
@@ -122,73 +134,73 @@ export default function App() {
   </div>
 );
 
-  return (
-   <div className="page-wrapper">
-  <div className="layout">
-    <h1 className="logo">
-     <span class="m1">M</span>eal<span class="m2">M</span>ath
-    </h1>
+ return (
+  <div className="page-wrapper">
+    <div className="layout">
+      <h1 className="logo">
+        <span className="m1">M</span>eal<span className="m2">M</span>ath
+      </h1>
 
-    <div className="content">    
-     <aside className="sidebar">
-         <label className="recipes">Recipes:</label>
-        <div className="recipe-list">
-          {recipes.map((r) => (
-            <button
-              key={r.id}
-              className={`recipe-btn ${
-                selectedRecipe && r.id === selectedRecipe.id ? "active" : ""
-              }`}
-              onClick={() => {
-                setSelectedRecipe(r);
-                setServings(r.servings);
-              }}
-            >
-              {r.name}
-            </button>
-          ))}
+      {loading && <p>Loading recipes...</p>}
+      {error && <p className="error">{error}</p>}
+
+      {!loading && selectedRecipe && (
+        <div className="content">
+          <aside className="sidebar">
+            <label className="recipes">Recipes:</label>
+            <div className="recipe-list">
+              {recipes.map((r) => (
+                <button
+                  key={r.id}
+                  className={`recipe-btn ${
+                    r.id === selectedRecipe.id ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    handleSelectRecipe(r);
+                    setServings(r.servings ?? 1);
+                  }}
+                >
+                  {r.name}
+                </button>
+              ))}
+            </div>
+          </aside>
+
+          <main className="main">
+            {/* Calculator FIRST */}
+            <div className="calculator-card">
+              <div className="calculator">
+                <button className="calc-btn" onClick={decrease}>−</button>
+                <span className="display">{servings}</span>
+                <button className="calc-btn" onClick={increase}>+</button>
+              </div>
+            </div>
+
+            {/* Details */}
+            <h2>{selectedRecipe.name}</h2>
+
+            <div className="meta">
+              <span>{selectedRecipe.category}</span>
+              <span>Original servings: {selectedRecipe.servings}</span>
+            </div>
+
+            <p className="description">{selectedRecipe.description}</p>
+
+            <div className="ingredients-card">
+              <h3>Ingredients</h3>
+              <ul className="ingredients">
+                {scaledIngredients.map((item) => (
+                  <li key={item.name}>
+                    <span>{item.name}</span>
+                    <span>{item.scaledQuantity} {item.unit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </main>
         </div>
-      </aside>
-
-      {/* Main */}
-      <main className="main">
-        {/* Calculator FIRST */}
-        <div className="calculator-card">
-          <div className="calculator">
-            <button className="calc-btn" onClick={decrease}>−</button>
-            <span className="display">{servings}</span>
-            <button className="calc-btn" onClick={increase}>+</button>
-          </div>
-
-          {calculationError && (
-            <p className="error">{calculationError}</p>
-          )}
-        </div>
-
-        {/* Details BELOW */}
-        <h2>{selectedRecipe.name}</h2>
-
-        <div className="meta">
-          <span>{selectedRecipe.category}</span>
-          <span>Original servings: {selectedRecipe.servings}</span>
-        </div>
-
-        <p className="description">{selectedRecipe.description}</p>
-
-        <div className="ingredients-card">
-          <h3>Ingredients</h3>
-          <ul className="ingredients">
-            {scaledIngredients.map((item) => (
-              <li key={item.name}>
-                <span>{item.name}</span>
-                <span>{item.scaledQuantity} {item.unit}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </main>
+      )}
     </div>
   </div>
-</div>
-  );
+);
 }
