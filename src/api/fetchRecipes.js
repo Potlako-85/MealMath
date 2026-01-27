@@ -11,10 +11,19 @@ export async function fetchRecipes() {
   return await res.json();
   }
     
-
   export async function fetchRecipesByID (id){
     const res = await fetch(`${API_BASE}/recipes/${id}`);
-    if (!res.ok) throw new Error("Failed to fetch reecipe");
+    if (!res.ok) throw new Error("Failed to fetch recipe");
     return res.json();
 
+}
+
+export async function searchRecipes(query) {
+  const res= await fetch(
+    `${API_BASE}/recipes?search=${encodeURIComponent(query)}`
+  );
+  if(!res.ok) {
+    throw new Error("Failed to search recipes");
+  }
+  return res.json();
 }

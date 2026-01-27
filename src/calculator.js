@@ -50,9 +50,14 @@ export function scaleRecipe(recipe, targetServings) {
   return recipe.ingredients.map((item) => {
     const type = checkUnitCompatibility(item.unit);
 
-    if (!type) {
-      throw new Error(`Unknown unit: ${item.unit}`);
-    }
+   if (!type) {
+  return {
+    ...item,
+    scaledQuantity: roundQuantity(item.quantity * factor),
+    unit: item.unit,
+    error: `Unknown unit: ${item.unit}`,
+  };
+}
 
     const scaled = item.quantity * factor;
 

@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { scaleRecipe } from "./calculator";
-import { fetchRecipes, fetchRecipesByID } from "./api/fetchRecipes";
+import { fetchRecipes, fetchRecipesByID, searchRecipes} from "./api/fetchRecipes";
 import "./App.css";
 
 export default function App() {
 
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [loadingRecipe, setLoadingRecipe] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchLoading, setSearchLoading] = useState(false);
 
   const [servings, setServings] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -48,7 +51,7 @@ export default function App() {
     localStorage.setItem("servings", servings);
   }, [servings]);
 
-  const handleSelectRecipe = async (recipe) => {
+ /* const handleSelectRecipe = async (recipe) => {
     try{
       const fullRecipe = await fetchRecipesByID(recipe.id);
 
@@ -60,7 +63,51 @@ export default function App() {
     } catch{
       setError("Failed to load recipe details");
     }
+  }*/
+
+  async function handleSelectRecipe(recipeSummary) {
+  setLoadingRecipe(true);
+
+  try {
+    const fullRecipe = await fetchRecipesByID(recipeSummary.id);
+
+    console.log("FULL RECIPE:", fullRecipe);
+
+    setSelectedRecipe(fullRecipe);
+    setServings(fullRecipe.servings);
+  } catch (err) {
+    
+    setError("Failed to load recipe details", err);
+  } finally {
+    setLoadingRecipe(false);
   }
+}
+
+async function handleSearch(e) {
+  const value = e.target.value;
+  setSearchTerm(value);
+  setSearchLoading(true);
+
+  try {
+    const results = value
+      ? await searchRecipes(value)
+      : await fetchRecipes();
+
+    setRecipes(results);
+
+    if (results.length > 0) {
+      const fullRecipe = await fetchRecipesByID(results[0].id);
+      setSelectedRecipe(fullRecipe);
+      setServings(fullRecipe.servings);
+    } else {
+      setSelectedRecipe(null);
+    }
+  } catch (err) {
+    setError("Failed to search recipes", err);
+  } finally {
+    setSearchLoading(false);
+  }
+}
 
   if (loading) {
       return (
@@ -95,11 +142,13 @@ export default function App() {
   let scaledIngredients = [];
   let calculationError = null;
 
+if (selectedRecipe) {
   try {
     scaledIngredients = scaleRecipe(selectedRecipe, servings);
   } catch (err) {
     calculationError = err.message;
   }
+}
 
   const increase = () => setServings((s) => s + 1);
   const decrease = () => setServings((s) => Math.max(1, s - 1));
@@ -141,21 +190,37 @@ export default function App() {
         <span className="m1">M</span>eal<span className="m2">M</span>ath
       </h1>
 
-      {loading && <p>Loading recipes...</p>}
       {error && <p className="error">{error}</p>}
 
-      {!loading && selectedRecipe && (
         <div className="content">
           <aside className="sidebar">
-            <label className="recipes">Recipes:</label>
+
+          <label className="recipes">Recipes:</label>
+
+          <input
+            type="text"
+            placeholder="Search recipes..."
+            value={searchTerm}
+            onChange={handleSearch}
+            className="search-input"
+          />
+
+          {searchLoading && <p className="loading">Searching...</p>}
+
+          {!searchLoading && recipes.length === 0 && (
+            <p className="empty">No recipes found</p>
+          )}
+
+          {recipes.length > 0 && (
             <div className="recipe-list">
               {recipes.map((r) => (
                 <button
                   key={r.id}
                   className={`recipe-btn ${
-                    r.id === selectedRecipe.id ? "active" : ""
+                   r.id === selectedRecipe?.id ? "active" : ""
                   }`}
                   onClick={() => {
+                    //console.log("CLICKED:",r)
                     handleSelectRecipe(r);
                     setServings(r.servings ?? 1);
                   }}
@@ -164,7 +229,13 @@ export default function App() {
                 </button>
               ))}
             </div>
+          )}
           </aside>
+
+          {loadingRecipe && <p>Loading recipe...</p>}
+
+          {!loadingRecipe && selectedRecipe && (
+            <>
 
           <main className="main">
             {/* Calculator FIRST */}
@@ -186,6 +257,10 @@ export default function App() {
 
             <p className="description">{selectedRecipe.description}</p>
 
+            {calculationError && (
+              <p className="error">{calculationError}</p>
+            )}
+
             <div className="ingredients-card">
               <h3>Ingredients</h3>
               <ul className="ingredients">
@@ -198,8 +273,9 @@ export default function App() {
               </ul>
             </div>
           </main>
+          </>
+          )}
         </div>
-      )}
     </div>
   </div>
 );
