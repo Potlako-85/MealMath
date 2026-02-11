@@ -1,17 +1,24 @@
 import express from "express";
 import cors from "cors";
+import initDatabase from "./db/database.js";
 import recipesRouter from "./routes/recipes.js";
+import makeRecipeRepository from "./db/repositories/recipes.js";
 
 const app = express();
-const PORT = 3001;
-
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/recipes", recipesRouter);
+async function bootstrap(){
+  const db = await initDatabase();
+  const recipeRepo = makeRecipeRepository(db);
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+ app.use("/api/recipes", recipesRouter(recipeRepo));
+
+  app.listen(3001, () =>
+    console.log("Server running on http://localhost:3001"));
+}
+
+bootstrap();
+
 
 
