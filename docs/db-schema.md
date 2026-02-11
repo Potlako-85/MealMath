@@ -8,8 +8,7 @@
 - Searching, filtering, and categorization
 - Extensibility for nutrition data and images
 
-This schema is technology-agnostic (can work with SQL or NoSQL).
-
+The data model can be adapted to document-based storage if needed.
 ---
 
 ## Core Entities
@@ -90,7 +89,6 @@ Links recipes to ingredients with quantities.
 - Quantities stored at base servings
 - Scaling handled at runtime (already implemented)
 - Ingredients normalized to avoid duplication
-- Schema supports both SQL and NoSQL backends
 
 ---
 
