@@ -187,7 +187,7 @@ if (selectedRecipe) {
   <div className="page-wrapper">
     <div className="layout">
       <h1 className="logo">
-        <span className="m1">M</span>eal<span className="m2">M</span>ath
+        <span className="meal">Meal</span><span className="math">Math</span>
       </h1>
 
       {error && <p className="error">{error}</p>}
@@ -197,6 +197,30 @@ if (selectedRecipe) {
 
           <label className="recipes">Recipes:</label>
 
+        <div class="search-wrapper">
+          <svg class="search-icon">
+             class="search-icon" 
+             viewBox="0 0 24 24" 
+             fill="none" 
+             xmlns="http://www.w3.org/2000/svg"
+
+            <circle 
+              cx="11" 
+              cy="11" 
+              r="7" 
+              stroke="currentColor" 
+               stroke-width="2"
+            />
+            <line 
+               x1="16.65" 
+               y1="16.65" 
+               x2="21" 
+               y2="21" 
+               stroke="currentColor" 
+               stroke-width="2" 
+               stroke-linecap="round"
+          />
+          </svg>
           <input
             type="text"
             placeholder="Search recipes..."
@@ -204,7 +228,7 @@ if (selectedRecipe) {
             onChange={handleSearch}
             className="search-input"
           />
-
+        </div>
           {searchLoading && <p className="loading">Searching...</p>}
 
           {!searchLoading && recipes.length === 0 && (
@@ -238,21 +262,23 @@ if (selectedRecipe) {
             <>
 
           <main className="main">
+          {/* Details */}
+            <div className="recipe-header">
+              <div className="title-group">
+                <h2>{selectedRecipe.name}</h2>
+
+            <div className="meta">
+              <span>{selectedRecipe.category}</span>
+              <span>Original servings: {selectedRecipe.servings}</span>
+            </div>
+           </div>
+
             {/* Calculator FIRST */}
-            <div className="calculator-card">
               <div className="calculator">
                 <button className="calc-btn" onClick={decrease}>−</button>
                 <span className="display">{servings}</span>
                 <button className="calc-btn" onClick={increase}>+</button>
               </div>
-            </div>
-
-            {/* Details */}
-            <h2>{selectedRecipe.name}</h2>
-
-            <div className="meta">
-              <span>{selectedRecipe.category}</span>
-              <span>Original servings: {selectedRecipe.servings}</span>
             </div>
 
             <p className="description">{selectedRecipe.description}</p>
