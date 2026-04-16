@@ -59,17 +59,17 @@ Eggs: 3.33 pcs
 
 ## 🛣️ Roadmap
 
--Web-based UI (React)
+- Web-based UI (React)
 
--Recipe selection and categorization
+- Recipe selection and categorization
 
--User-added recipes
+- User-added recipes
 
--Database-backed persistence
+- Database-backed persistence
 
--Search and filtering
+- Search and filtering
 
--Nutritional information
+- Nutritional information
 
 -Image-based recipe input (OCR exploration)
 
@@ -83,8 +83,3 @@ Potlako Makofane
 This project is part of a personal portfolio focused on building real, scalable software systems.
 
 ---
-
-## 📝 Notes
-
-This repository represents an early-stage MVP.
-The project is under active development and will continue to evolve as new features and architectural improvements are added.
