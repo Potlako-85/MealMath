@@ -71,7 +71,7 @@ Eggs: 3.33 pcs
 
 - Nutritional information
 
--Image-based recipe input (OCR exploration)
+- Image-based recipe input (OCR exploration)
 
 ---
 
