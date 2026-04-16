@@ -51,9 +51,9 @@ Eggs: 3.33 pcs
 
 ## 🛠️ Tech Stack
 
--JavaScript (Node.js)
+- JavaScript (Node.js)
 
--No external libraries (logic-first MVP)
+- No external libraries (logic-first MVP)
 
 ---
 
