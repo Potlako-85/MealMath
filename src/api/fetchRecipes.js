@@ -1,6 +1,6 @@
 //import { mockRecipes } from "../mockRecipes";
 
-const API_BASE = "http://localhost:3001/api";
+const API_BASE = "http://localhost:VITE_API_API";
 
 export async function fetchRecipes() {
     const res = await fetch(`${API_BASE}/recipes`);
