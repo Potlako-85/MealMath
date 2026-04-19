@@ -15,22 +15,37 @@ html, body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-body {
-  background: #9ca3af;
-  margin: 0;
-  min-height: 100vh;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  position: relative;
-  overflow-x: hidden;
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(51, 48, 48, 0.55);
-  backdrop-filter:  blur(8px);
-  z-index: -1;
+:root {
+  --color-primary: #4F6A5D;
+  --color-primary-hover: #4F6A5D;
+
+  --color-bg: #F6F4EF;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #FAFAF8;
+
+  --color-text: #1F1F1F;
+  --color-text-muted: #6B6B6B;
+
+  --color-border: #E6E4DF;
+}
+
+body {
+  background: var(--color-bg);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--color-text);
+}
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
 }
 
 .page-wrapper {
@@ -38,35 +53,33 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: var(--space-4);
 }
 
 .layout {
   width: 100%;
-  max-width: 1150px;
-  background: #e2e2e2;
-  border-radius: 20px;
-  padding: 2.5rem 3rem;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  max-width: 1100px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: var(--space-5);
 }
 
 .logo {
   font-size: 2.5rem;
   font-weight: 600;
-  color: #111827;
   letter-spacing: -0.5px;
 }
 
-.meal{
+.meal{ 
   font-weight: 500;
   color: #374151
-}
+ } 
 
-.math{
+.math{ 
   font-weight: 700;
   color: #111827
-}
+ }
 
 .content {
   display: grid;
@@ -84,23 +97,25 @@ body::after {
 }
 
 .recipe-btn {
-  padding: 0.9rem 1.1rem;
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
-  color: #111827;
-  font-size: 0.95rem;
+  padding: var(--space-3);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  font-size: 16px;
   text-align: left;
   cursor: pointer;
+  transition: 0.15s ease;
+  min-height: 48px;
 }
 
 .recipe-btn:hover {
-  background: #e5e7eb;
+    background: var(--color-surface-alt);
 }
 
 .recipe-btn.active {
-  background: #111827;
+  background: var(--color-primary);
   color: white;
+  border-color: var(--color-primary);
 }
 
 .main {
@@ -108,24 +123,18 @@ body::after {
 }
 
 .main h2 {
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  color: #111827;
+  font-size: 22px;
+  font-weight: 600;
 }
 
 .meta {
-  display: flex;
-  gap: 1.5rem;
-  font-size: 0.85rem;
-  color: #6b7280;
-  margin-bottom: 1.2rem;
+  font-size: 14px;
+  color: var(--color-text-muted);
 }
 
 .description {
-  font-size: 1rem;
-  color: #374151;
-  margin-bottom: 2rem;
+  font-size: 16px;
+  color: var(--color-text-muted);
 }
 
 .empty {
@@ -150,6 +159,11 @@ body::after {
   gap: 2rem;
 }
 
+.recipe-btn.active {
+  border: 2px solid #2f6f4e;
+  font-weight: bold;
+}
+
 .title-group {
   display: flex;
   flex-direction: column;
@@ -157,9 +171,10 @@ body::after {
 }
 
 .ingredients-card {
-  background: #f9fafb;
-  border-radius: 20px;
-  padding: 1.75rem;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: var(--space-4);
 }
 
 .ingredients-card h3 {
@@ -172,15 +187,15 @@ body::after {
   list-style: none;
   padding: 0;
   margin: 0;
-  color:#111827;
 }
 
 .ingredients li {
   display: flex;
   justify-content: space-between;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid #e5e7eb;
-  font-size: 0.95rem;
+  align-items: center;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 16px;
 }
 
 .ingredients li:last-child {
@@ -203,18 +218,21 @@ body::after {
 }
 
 .calc-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  border: none;
-  background: rgb(43, 42, 42);
-  color: #c5c5c5;
-  font-size: 1.1rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 20px;
+  transition: 0.15s ease;
+  min-height: 48px;
 }
 
 .calc-btn:hover {
-  background: #111827;
+  background: var(--color-primary);
   color: white;
+  border-color: var(--color-primary);
 }
 
 .display {
@@ -222,6 +240,40 @@ body::after {
   font-size: 1.1rem;
   min-width: 24px;
   text-align: center;
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --color-border: #000000;
+    --color-text-muted: #333333;
+  }
+
+  .ingredients li {
+    border-bottom: 2px solid #000;
+  }
+
+  .calc-btn {
+    border: 2px solid #000;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1B1C1D;
+    --color-surface: #242526;
+    --color-surface-alt: #2C2D2F;
+
+    --color-text: #F3F4F6;
+    --color-text-muted: #B4B7BB;
+
+    --color-border: #3A3B3C;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
 }
 
 @media (max-width: 900px) {
@@ -249,15 +301,14 @@ body::after {
 }
 
 .search-input {
-  width: 100%;
-  padding: 0.9rem 1.1rem;
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
-  color: #111827;
-  font-size: 0.95rem;
-  outline: none;
-  transition: all 0.2s ease;
+   width: 100%;
+  padding: var(--space-3);
+  padding-left: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: 16px;
+  transition: 0.15s ease;
 }
 
 .search-input::placeholder {
@@ -265,8 +316,8 @@ body::after {
 }
 
 .search-input:focus {
-  border-color: #111827;
-  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(94,124,110,0.15);
 }
 
 .search-wrapper {
@@ -286,4 +337,21 @@ body::after {
 
 .search-input {
   padding-left: 2.5rem;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid #eee;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }

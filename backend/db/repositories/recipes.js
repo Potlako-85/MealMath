@@ -2,7 +2,7 @@ export default function makeRecipeRepository(db){
     return{
         async getAll() {
          return await db.all(
-            'SELECT id, name, category FROM recipes ORDER BY name'
+            'SELECT id, name, category FROM recipes ORDER BY category, name'
          );
         },
 
@@ -17,7 +17,11 @@ export default function makeRecipeRepository(db){
             if (!recipe) return null;
 
             const ingredients = await db.all(
-                `SELECT ri.id AS recipeIngredientId, i.id AS ingredientId, i.name, ri.quantity
+                `SELECT ri.id AS recipeIngredientId,
+                 i.id AS ingredientId,
+                 i.name,
+                 ri.quantity,
+                ri.unit
                 FROM recipe_ingredients ri
                 JOIN ingredients i ON ri.ingredient_id = i.id
                 WHERE ri.recipe_id = ?`,
@@ -45,7 +49,7 @@ export default function makeRecipeRepository(db){
             );
         },
         //For future:
-        //async cretate
+        //async create
         //async update
        //async delete
     };

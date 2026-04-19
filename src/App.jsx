@@ -15,6 +15,8 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [openCategories, setOpenCategories] = useState({});
+
  useEffect(() => {
   async function loadInitialRecipe() {
     try {
@@ -109,6 +111,28 @@ async function handleSearch(e) {
   }
 }
 
+function groupRecipesByCategory(recipes) {
+  const groups = {};
+
+  recipes.forEach((recipe) => {
+    if (!groups[recipe.category]) {
+      groups[recipe.category] = [];
+    }
+
+    groups[recipe.category].push(recipe);
+  });
+
+  return groups;
+}
+const groupedRecipes = groupRecipesByCategory(recipes);
+
+const toggleCategory = (category) => {
+  setOpenCategories((prev) => ({
+    ...prev,
+    [category]: !prev[category],
+  }));
+};
+
   if (loading) {
       return (
     <div className="layout">
@@ -186,9 +210,11 @@ if (selectedRecipe) {
  return (
   <div className="page-wrapper">
     <div className="layout">
+      <div className="header">
       <h1 className="logo">
         <span className="meal">Meal</span><span className="math">Math</span>
-      </h1>
+      </h1> 
+      </div>
 
       {error && <p className="error">{error}</p>}
 
@@ -198,11 +224,11 @@ if (selectedRecipe) {
           <label className="recipes">Recipes:</label>
 
         <div class="search-wrapper">
-          <svg class="search-icon">
+          <svg
              class="search-icon" 
              viewBox="0 0 24 24" 
              fill="none" 
-             xmlns="http://www.w3.org/2000/svg"
+             xmlns="http://www.w3.org/2000/svg">
 
             <circle 
               cx="11" 
@@ -236,15 +262,44 @@ if (selectedRecipe) {
           )}
 
           {recipes.length > 0 && (
-            <div className="recipe-list">
+           <div className="recipe-list">
+             {Object.keys(groupedRecipes).length > 0 && (
+             <div className="recipe-list">
+              {Object.entries(groupedRecipes).map(([category, recipes]) => (
+               <div key={category} className="recipe-category">
+
+            {/* Accessible header button */}
+            <button
+              className="category-header"
+              onClick={() => toggleCategory(category)}
+              aria-expanded={!!openCategories[category]}
+              aria-controls={`section-${category}`}
+              id={`header-${category}`}
+            >
+          <span>{category}</span>
+          <span
+            aria-hidden="true"
+            className={`chevron ${openCategories[category] ? "open" : ""}`}
+          >
+             ▾
+          </span>
+          </button>
+
+           {/* Accessible dropdown panel */}
+            <div
+              id={`section-${category}`}
+              role="region"
+              aria-labelledby={`header-${category}`}
+              hidden={!openCategories[category]}
+              className="category-content"
+            >
               {recipes.map((r) => (
                 <button
                   key={r.id}
                   className={`recipe-btn ${
-                   r.id === selectedRecipe?.id ? "active" : ""
+                    r.id === selectedRecipe?.id ? "active" : ""
                   }`}
                   onClick={() => {
-                    //console.log("CLICKED:",r)
                     handleSelectRecipe(r);
                     setServings(r.servings ?? 1);
                   }}
@@ -253,7 +308,14 @@ if (selectedRecipe) {
                 </button>
               ))}
             </div>
-          )}
+
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
+           
           </aside>
 
           {loadingRecipe && <p>Loading recipe...</p>}
@@ -273,11 +335,27 @@ if (selectedRecipe) {
             </div>
            </div>
 
-            {/* Calculator FIRST */}
+            {/* Calculator FIRST*/}
               <div className="calculator">
-                <button className="calc-btn" onClick={decrease}>−</button>
-                <span className="display">{servings}</span>
-                <button className="calc-btn" onClick={increase}>+</button>
+                <button 
+                 className="calc-btn"
+                  onClick={decrease}
+                  aria-label="Decrease servings">
+                    −  
+                </button>
+
+                <span
+                 className="display"
+                 aria-live="polite">
+                 {servings}
+                </span>
+
+                <button 
+                 className="calc-btn"
+                 onClick={increase}
+                 aria-label="Increase servings">
+                  +
+                </button>
               </div>
             </div>
 
@@ -288,12 +366,18 @@ if (selectedRecipe) {
             )}
 
             <div className="ingredients-card">
-              <h3>Ingredients</h3>
-              <ul className="ingredients">
+              <h3>Ingredients for {servings} servings</h3>
+              <ul className="ingredients" aria-alive="polite">
                 {scaledIngredients.map((item) => (
                   <li key={item.name}>
-                    <span>{item.name}</span>
-                    <span>{item.scaledQuantity} {item.unit}</span>
+                   <span aria-hidden="true">{item.name}</span>
+                   <span aria-hidden="true">
+                     {item.scaledQuantity} {item.unit}
+                  </span>
+
+                  <span className="sr-only">
+                   {item.name}: {item.scaledQuantity} {item.unit}
+                  </span>
                   </li>
                 ))}
               </ul>
