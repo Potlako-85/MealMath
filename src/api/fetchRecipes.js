@@ -1,6 +1,5 @@
-//import { mockRecipes } from "../mockRecipes";
-
-const API_BASE = "http://localhost:VITE_API_API";
+const VITE_API_URL = "http://localhost:3001";
+const API_BASE = import.meta.env.VITE_API_URL;
 
 export async function fetchRecipes() {
     const res = await fetch(`${API_BASE}/recipes`);
