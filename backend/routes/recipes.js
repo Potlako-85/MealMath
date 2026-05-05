@@ -1,8 +1,4 @@
 import express from "express";
-//import initDatabase from "../db/database.js";
-//import makeRecipeRepository from "../db/repositories/recipes.js";
-
-
 
 export default function recipeRouter(recipeRepo){
   const router = express.Router();
