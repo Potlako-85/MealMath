@@ -1,4 +1,6 @@
-const VITE_API_URL = "http://localhost:3001";
+
+//import { mockRecipes } from "../mockRecipes";
+
 const API_BASE = import.meta.env.VITE_API_URL;
 
 export async function fetchRecipes() {
@@ -24,5 +26,7 @@ export async function searchRecipes(query) {
   if(!res.ok) {
     throw new Error("Failed to search recipes");
   }
-  return res.json();
+  return res.json()
 }
+
+console.log("API BASE:", import.meta.env.VITE_API_URL);

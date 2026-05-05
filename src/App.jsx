@@ -375,9 +375,9 @@ if (selectedRecipe) {
                      {item.scaledQuantity} {item.unit}
                   </span>
 
-                  <span className="sr-only">
+                  {/*<span className="sr-only">
                    {item.name}: {item.scaledQuantity} {item.unit}
-                  </span>
+                  </span>*/}
                   </li>
                 ))}
               </ul>
