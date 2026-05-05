@@ -77,7 +77,7 @@ Eggs: 3.33 pcs
 
 ## 👤 Author
 
-Potlako Makofane
+Potlako Makofane 
 3rd Year Computer Science Student
 
 This project is part of a personal portfolio focused on building real, scalable software systems.
